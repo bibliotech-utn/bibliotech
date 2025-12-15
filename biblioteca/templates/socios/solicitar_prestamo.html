@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Solicitar Préstamo - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Solicitar Préstamo</h1>
+        <p class="text-base-content/70 text-lg">Confirma los detalles del préstamo</p>
+    </div>
+
+    <!-- Book Details Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mb-6">
+        <div class="card-body p-6">
+            <h2 class="text-xl font-semibold text-base-content mb-4">Detalles del Libro</h2>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+                <table class="table w-full">
+                    <tbody>
+                        <tr class="hover:bg-base-200">
+                            <th class="w-1/3 font-semibold text-base-content">Título</th>
+                            <td class="font-semibold text-base-content">{{ libro.titulo }}</td>
+                        </tr>
+                        <tr class="hover:bg-base-200">
+                            <th class="font-semibold text-base-content">Autor</th>
+                            <td class="text-base-content/80">{{ libro.autor.nombre }} {{ libro.autor.apellido }}</td>
+                        </tr>
+                        <tr class="hover:bg-base-200">
+                            <th class="font-semibold text-base-content">Género</th>
+                            <td>
+                                {% if libro.genero %}
+                                    <span class="badge badge-primary badge-outline badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ libro.genero }}</span>
+                                {% else %}
+                                    <span class="text-base-content/50">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-base-200">
+                            <th class="font-semibold text-base-content">Editorial</th>
+                            <td class="text-base-content/80">{{ libro.editorial|default:"-" }}</td>
+                        </tr>
+                        <tr class="hover:bg-base-200">
+                            <th class="font-semibold text-base-content">ISBN</th>
+                            <td>
+                                {% if libro.isbn %}
+                                    <span class="badge badge-outline badge-sm rounded-lg font-mono inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ libro.isbn }}</span>
+                                {% else %}
+                                    <span class="text-base-content/50">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% if ejemplar %}
+                        <tr class="hover:bg-base-200">
+                            <th class="font-semibold text-base-content">Ejemplar</th>
+                            <td>
+                                <span class="badge badge-primary badge-sm rounded-lg font-mono inline-flex items-center justify-center leading-normal whitespace-nowrap px-3 py-1 min-w-[2.5rem]">{{ ejemplar.codigo }}</span>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loan Information Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mb-6">
+        <div class="card-body p-6">
+            <h2 class="text-xl font-semibold text-base-content mb-4">Información del Préstamo</h2>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+                <table class="table w-full">
+                    <tbody>
+                        <tr class="hover:bg-base-200">
+                            <th class="w-1/3 font-semibold text-base-content">Socio</th>
+                            <td class="font-semibold text-base-content">{{ socio.nombre }} {{ socio.apellido }}</td>
+                        </tr>
+                        <tr class="hover:bg-base-200">
+                            <th class="font-semibold text-base-content">Fecha de Devolución</th>
+                            <td>
+                                <span class="badge badge-success badge-lg rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-3 py-1.5">{{ fecha_devolucion|date:"d/m/Y" }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning Alert -->
+    <div class="alert bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 rounded-xl shadow-lg mb-6">
+        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <div>
+            <h3 class="font-semibold text-amber-800 dark:text-amber-200">Nota importante</h3>
+            <div class="text-sm text-amber-700 dark:text-amber-300">El préstamo será por 30 días. Asegúrate de devolver el libro a tiempo.</div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <form method="post" class="flex gap-4 justify-end">
+        {% csrf_token %}
+        <a href="{% url 'socios:buscar_libros' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">
+            Cancelar
+        </a>
+        <button type="submit" class="btn bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Confirmar Solicitud
+        </button>
+    </form>
+</div>
+{% endblock %}

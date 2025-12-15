@@ -1,0 +1,56 @@
+{% comment %}
+Componente de paginación
+Uso: {% include 'components/pagination.html' with page_obj=page_obj q=q %}
+{% endcomment %}
+
+{% if page_obj.has_other_pages %}
+<div class="flex items-center justify-center gap-2 mt-6">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}" class="
+            inline-flex items-center justify-center
+            w-10 h-10
+            rounded-xl
+            bg-base-200 hover:bg-base-300
+            text-base-content
+            transition-all duration-200
+            shadow hover:shadow-lg
+        ">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </a>
+    {% else %}
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-base-200 text-base-content/40 cursor-not-allowed">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </span>
+    {% endif %}
+    
+    <span class="px-4 py-2 rounded-xl bg-indigo-500 text-white font-semibold shadow-lg">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}" class="
+            inline-flex items-center justify-center
+            w-10 h-10
+            rounded-xl
+            bg-base-200 hover:bg-base-300
+            text-base-content
+            transition-all duration-200
+            shadow hover:shadow-lg
+        ">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    {% else %}
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-base-200 text-base-content/40 cursor-not-allowed">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </span>
+    {% endif %}
+</div>
+{% endif %}

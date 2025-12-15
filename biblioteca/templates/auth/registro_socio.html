@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro Socio - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto py-8">
+    <!-- Header -->
+    <div class="mb-8 text-center">
+        <div class="w-16 h-16 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+            </svg>
+        </div>
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Registro de Nuevo Socio</h1>
+        <p class="text-base-content/70 text-lg">Crea tu cuenta para acceder a los servicios de la biblioteca</p>
+    </div>
+
+    <!-- Premium Form Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl">
+        <div class="card-body p-8">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Grid: Username y Email -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Nombre de Usuario <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="username" value="{{ form.username.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.username.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.username.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Email <span class="text-error">*</span></span>
+                        </label>
+                        <input type="email" name="email" value="{{ form.email.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.email.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.email.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Grid: Nombre y Apellido -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Nombre <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="nombre" value="{{ form.nombre.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.nombre.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.nombre.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Apellido <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="apellido" value="{{ form.apellido.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.apellido.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.apellido.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Grid: Identificación y Teléfono -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Identificación (DNI) <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="identificacion" value="{{ form.identificacion.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.identificacion.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.identificacion.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Teléfono (opcional)</span>
+                        </label>
+                        <input type="text" name="telefono" value="{{ form.telefono.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Opcional">
+                        {% if form.telefono.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.telefono.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Grid: Contraseñas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Contraseña <span class="text-error">*</span></span>
+                        </label>
+                        <input type="password" name="password1" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.password1.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.password1.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Confirmar Contraseña <span class="text-error">*</span></span>
+                        </label>
+                        <input type="password" name="password2" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.password2.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.password2.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex gap-4 justify-end mt-8 pt-6 border-t border-base-300">
+                    <a href="{% url 'login_socio' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">
+                        Ya tengo cuenta
+                    </a>
+                    <button type="submit" class="btn bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                        Registrarse
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

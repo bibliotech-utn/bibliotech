@@ -1,0 +1,190 @@
+# ============================================================================
+# BiblioTech - .gitignore Profesional
+# ============================================================================
+
+# ============================================================================
+# ENTORNOS VIRTUALES
+# ============================================================================
+venv/
+venv_*/
+env/
+ENV/
+.venv/
+virtualenv/
+*.pyenv
+
+# ============================================================================
+# PYTHON - Archivos compilados y cache
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.Python
+
+# ============================================================================
+# DJANGO - Archivos específicos
+# ============================================================================
+db.sqlite3
+db.sqlite3-journal
+*.log
+logs/
+staticfiles/
+media/
+*.pot
+*.pyc
+local_settings.py
+
+# ============================================================================
+# ENTORNO Y VARIABLES
+# ============================================================================
+.env
+.env.local
+.env.*.local
+*.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ============================================================================
+# IDEs Y EDITORES
+# ============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+.vscode-test
+
+# PyCharm / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================================================
+# TESTING Y COBERTURA
+# ============================================================================
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# ============================================================================
+# NODE.JS (si se usa para Tailwind/JS)
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.pnp/
+.pnp.js
+
+# ============================================================================
+# SISTEMA OPERATIVO
+# ============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.DS_Store
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# ARCHIVOS TEMPORALES Y BACKUPS
+# ============================================================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.swp
+*.swo
+*~
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ============================================================================
+# DEPLOYMENT Y BUILD
+# ============================================================================
+*.war
+*.ear
+*.sar
+target/
+.gradle/
+build/
+out/
+dist/
+
+# ============================================================================
+# DOCUMENTACIÓN GENERADA
+# ============================================================================
+docs/_build/
+site/
+.readthedocs.yml
+
+# ============================================================================
+# OTROS
+# ============================================================================
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+*.tsbuildinfo

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Reservar Libro - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Confirmar Reserva</h1>
+        <p class="text-base-content/70 text-lg">Revisá los detalles antes de confirmar tu reserva</p>
+    </div>
+
+    <!-- Premium Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl">
+        <div class="card-body p-8">
+            <h2 class="text-2xl font-semibold text-base-content mb-6">Información del Libro</h2>
+            
+            <div class="space-y-6">
+                <!-- Book Info -->
+                <div class="flex items-start gap-4 p-4 bg-base-100 rounded-xl border border-base-300">
+                    <div class="w-16 h-16 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-base-content mb-1">{{ libro.titulo }}</h3>
+                        <p class="text-base-content/70 mb-2">Autor: {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
+                        {% if libro.genero %}
+                            <span class="badge badge-primary badge-outline badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ libro.genero }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="stat bg-base-100 rounded-xl p-4 border border-base-300">
+                        <div class="stat-title text-base-content/70">Total de Ejemplares</div>
+                        <div class="stat-value text-indigo-600 dark:text-indigo-400 text-3xl">{{ total_ejemplares }}</div>
+                    </div>
+                    <div class="stat bg-base-100 rounded-xl p-4 border border-base-300">
+                        <div class="stat-title text-base-content/70">Ejemplares Disponibles</div>
+                        <div class="stat-value text-red-600 dark:text-red-400 text-3xl">{{ ejemplares_disponibles }}</div>
+                    </div>
+                </div>
+
+                <!-- Warning Alert -->
+                <div class="alert bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 rounded-xl">
+                    <svg class="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <div class="text-amber-800 dark:text-amber-200">
+                        <p class="font-semibold">No hay ejemplares disponibles en este momento.</p>
+                        <p>Te notificaremos cuando haya ejemplares disponibles. Tendrás 5 días para retirarlo una vez confirmada la reserva y deberás presentar tu DNI o ID de socio al momento del retiro.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-4 justify-end mt-8 pt-6 border-t border-base-300">
+                <a href="{% url 'socios:buscar_libros' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">
+                    Cancelar
+                </a>
+                <form method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Confirmar Reserva
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

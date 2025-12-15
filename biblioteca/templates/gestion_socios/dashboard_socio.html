@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Panel - Socio - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Panel de Socio</h1>
+        <p class="text-base-content/70 text-lg">Bienvenido, {{ socio.nombre }} {{ socio.apellido }}</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-6 mb-8">
+        <div class="flex flex-col gap-3 w-full md:w-64">
+            <a href="{% url 'socios:mis_prestamos' %}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200">
+                Mis Préstamos
+            </a>
+            <a href="{% url 'socios:mis_reservas' %}" class="btn btn-outline border-amber-300 text-amber-700 hover:bg-amber-100 rounded-xl transition-all duration-200">
+                Mis Reservas
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+        <div class="dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Préstamos Activos</p>
+                    <p class="text-3xl font-semibold text-indigo-600">{{ prestamos_activos }}</p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Préstamos Vencidos</p>
+                    <p class="text-3xl font-semibold text-red-600">{{ prestamos_vencidos }}</p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-red-100 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Reservas Pendientes</p>
+                    <p class="text-3xl font-semibold text-amber-600">{{ reservas_pendientes }}</p>
+                </div>
+                <div class="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M4.93 19h14.14c1.26 0 2.1-1.31 1.55-2.45L13.55 5.55c-.55-1.14-2.11-1.14-2.66 0L3.38 16.55C2.83 17.69 3.67 19 4.93 19z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <a href="{% url 'socios:buscar_libros' %}" class="feature-card">
+            <div class="feature-card-icon">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Buscar Libros</h3>
+            <p class="text-gray-600">Explora nuestro catálogo de libros disponibles</p>
+        </a>
+
+        <a href="{% url 'socios:mis_prestamos' %}" class="feature-card">
+            <div class="feature-card-icon">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Mis Préstamos</h3>
+            <p class="text-gray-600">Gestiona tus préstamos activos e historial</p>
+        </a>
+
+        <a href="{% url 'socios:mis_reservas' %}" class="feature-card">
+            <div class="feature-card-icon">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M4.93 19h14.14c1.26 0 2.1-1.31 1.55-2.45L13.55 5.55c-.55-1.14-2.11-1.14-2.66 0L3.38 16.55C2.83 17.69 3.67 19 4.93 19z"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Mis Reservas</h3>
+            <p class="text-gray-600">Consulta el estado de tus reservas y próximas retiradas</p>
+        </a>
+    </div>
+
+    <div class="section-card">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-semibold text-base-content">Últimos Préstamos Devueltos</h2>
+        </div>
+        
+        {% if prestamos_historicos %}
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="font-semibold">Libro</th>
+                            <th class="font-semibold">Ejemplar</th>
+                            <th class="font-semibold">Fecha de Devolución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prestamo in prestamos_historicos %}
+                        <tr>
+                            <td>
+                                <div class="font-semibold">{{ prestamo.ejemplar.libro.titulo }}</div>
+                                <div class="text-sm text-gray-600">{{ prestamo.ejemplar.libro.autor.nombre }} {{ prestamo.ejemplar.libro.autor.apellido }}</div>
+                            </td>
+                            <td>
+                                <span class="badge badge-outline badge-sm font-mono rounded-lg inline-flex items-center justify-center leading-normal whitespace-nowrap px-3 py-1 min-w-[2.5rem]">{{ prestamo.ejemplar.codigo }}</span>
+                            </td>
+                            <td>{{ prestamo.fecha_devolucion_real|date:"d/m/Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert bg-indigo-50 border-indigo-200 rounded-xl">
+                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-indigo-800">No hay préstamos devueltos registrados.</span>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

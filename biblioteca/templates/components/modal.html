@@ -1,0 +1,45 @@
+{% comment %}
+Componente de modal premium
+Uso: {% include 'components/modal.html' with id="modal-id" title="Título" %}
+Parámetros:
+- id: ID único del modal (requerido)
+- title: Título del modal (opcional)
+- size: sm, md, lg, xl (default: md)
+{% endcomment %}
+
+<input type="checkbox" id="{{ id }}" class="modal-toggle" />
+<div class="modal">
+    <div class="modal-box 
+        {% if size == 'sm' %}
+            max-w-md
+        {% elif size == 'lg' %}
+            max-w-3xl
+        {% elif size == 'xl' %}
+            max-w-5xl
+        {% else %}
+            max-w-2xl
+        {% endif %}
+        rounded-xl shadow-2xl
+    ">
+        <div class="flex items-center justify-between mb-4">
+            {% if title %}
+                <h3 class="text-2xl font-bold text-base-content">{{ title }}</h3>
+            {% endif %}
+            <label for="{{ id }}" class="btn btn-sm btn-circle btn-ghost hover:bg-base-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </label>
+        </div>
+        
+        <div class="modal-content">
+            {% block modal_content %}{% endblock %}
+        </div>
+        
+        <div class="modal-action">
+            {% block modal_actions %}{% endblock %}
+        </div>
+    </div>
+    <label class="modal-backdrop" for="{{ id }}"></label>
+</div>
+

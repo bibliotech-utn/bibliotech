@@ -1,0 +1,61 @@
+{% comment %}
+Wrapper completo para campos de formulario
+Uso: {% include 'components/form_field.html' with field=form.field %}
+{% endcomment %}
+
+<div class="form-control w-full mb-4">
+    <label class="label">
+        <span class="label-text font-semibold text-base-content">{{ field.label }}</span>
+        {% if field.field.required %}
+            <span class="text-error">*</span>
+        {% endif %}
+    </label>
+    
+    {% if field.field.widget.input_type == 'text' or field.field.widget.input_type == 'email' or field.field.widget.input_type == 'number' or field.field.widget.input_type == 'password' %}
+        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" value="{{ field.value|default:'' }}" id="{{ field.auto_id }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" {% if field.field.required %}required{% endif %}>
+    {% elif field.field.widget.input_type == 'date' %}
+        <input type="date" name="{{ field.name }}" value="{{ field.value|default:'' }}" id="{{ field.auto_id }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" {% if field.field.required %}required{% endif %}>
+    {% elif field.field.widget.input_type == 'checkbox' %}
+        <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" name="{{ field.name }}" id="{{ field.auto_id }}" class="checkbox checkbox-primary rounded" {% if field.value %}checked{% endif %}>
+                <span class="label-text">{{ field.label }}</span>
+            </label>
+        </div>
+    {% elif field.field.widget.input_type == 'select' or field|stringformat:"s"|slice:":6" == '<selec' %}
+        {{ field }}
+        <script>
+            document.getElementById('{{ field.auto_id }}').classList.add('select', 'select-bordered', 'w-full', 'rounded-xl', 'transition-all', 'duration-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-indigo-500', 'focus:border-transparent');
+        </script>
+    {% elif field.field.widget.input_type == 'textarea' or field|stringformat:"s"|slice:":8" == '<textare' %}
+        {{ field }}
+        <script>
+            document.getElementById('{{ field.auto_id }}').classList.add('textarea', 'textarea-bordered', 'w-full', 'rounded-xl', 'transition-all', 'duration-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-indigo-500', 'focus:border-transparent');
+        </script>
+    {% else %}
+        {{ field }}
+        <script>
+            const fieldEl = document.getElementById('{{ field.auto_id }}');
+            if (fieldEl) {
+                fieldEl.classList.add('input', 'input-bordered', 'w-full', 'rounded-xl', 'transition-all', 'duration-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-indigo-500', 'focus:border-transparent');
+            }
+        </script>
+    {% endif %}
+    
+    {% if field.help_text %}
+        <label class="label">
+            <span class="label-text-alt text-base-content/60">{{ field.help_text }}</span>
+        </label>
+    {% endif %}
+    
+    {% if field.errors %}
+        <label class="label">
+            <span class="label-text-alt text-error">
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            </span>
+        </label>
+    {% endif %}
+</div>
+

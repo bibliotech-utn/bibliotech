@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Socios - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <div>
+            <h1 class="text-4xl font-semibold text-base-content mb-2">Lista de Socios</h1>
+            <p class="text-base-content/70 text-lg">Gestiona los socios registrados en el sistema</p>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+            <a href="{% url 'gestion_socios:importar_socios' %}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl whitespace-normal leading-normal transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                Importar desde Excel
+            </a>
+            <a href="{% url 'gestion_socios:exportar_socios_csv' %}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-base-200 hover:bg-base-300 text-base-content font-semibold rounded-xl shadow hover:shadow-lg whitespace-normal leading-normal transition-all duration-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Exportar CSV
+            </a>
+            <a href="{% url 'gestion_socios:crear_socio' %}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl whitespace-normal leading-normal transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Crear Nuevo Socio
+            </a>
+        </div>
+    </div>
+    
+    <!-- Premium Search Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mb-6">
+        <div class="card-body p-6">
+            <form method="get" action="{% url 'gestion_socios:listar_socios' %}" class="flex flex-col sm:flex-row gap-4">
+                <input type="text" name="q" class="input input-bordered flex-1 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" value="{{ q }}" placeholder="Buscar por nombre, apellido, DNI o email...">
+                <button type="submit" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    Buscar
+                </button>
+                {% if q %}
+                    <a href="{% url 'gestion_socios:listar_socios' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">Limpiar</a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    
+    {% if page_obj %}
+        <!-- Premium Table Card -->
+        <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl">
+            <div class="card-body p-0">
+                <div class="overflow-x-auto rounded-xl">
+                    <table class="table w-full">
+                        <thead class="bg-base-300">
+                            <tr>
+                                <th class="font-semibold text-base-content">Nombre</th>
+                                <th class="font-semibold text-base-content">Apellido</th>
+                                <th class="font-semibold text-base-content">Identificación</th>
+                                <th class="font-semibold text-base-content">Email</th>
+                                <th class="font-semibold text-base-content">Teléfono</th>
+                                <th class="font-semibold text-base-content">Estado</th>
+                                <th class="font-semibold text-base-content">Fecha de Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for socio in page_obj %}
+                            <tr class="hover:bg-base-200 transition-colors duration-150">
+                                <td class="font-semibold text-base-content">{{ socio.nombre }}</td>
+                                <td class="font-semibold text-base-content">{{ socio.apellido }}</td>
+                                <td>
+                                    <span class="badge badge-outline badge-sm rounded-lg font-mono inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ socio.identificacion }}</span>
+                                </td>
+                                <td class="text-base-content/80">{{ socio.email }}</td>
+                                <td class="text-base-content/80">{{ socio.telefono|default:"-" }}</td>
+                                <td>
+                                    {% if socio.activo %}
+                                        <span class="badge badge-success badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Activo</span>
+                                    {% else %}
+                                        <span class="badge badge-error badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Inactivo</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-base-content/80">{{ socio.fecha_registro|date:"d/m/Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Pagination -->
+        {% if page_obj.has_other_pages %}
+            {% include 'components/pagination.html' with page_obj=page_obj q=q %}
+        {% endif %}
+    {% else %}
+        <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl">
+            <div class="card-body p-8 text-center">
+                <div class="w-16 h-16 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-base-content mb-2">No se encontraron socios</h3>
+                <p class="text-base-content/70 mb-4">Intenta ajustar los filtros de búsqueda o crea un nuevo socio.</p>
+                <a href="{% url 'gestion_socios:crear_socio' %}" class="btn bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Crear Primer Socio
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

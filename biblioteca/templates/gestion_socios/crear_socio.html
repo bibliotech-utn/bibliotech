@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Socio - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Crear Nuevo Socio</h1>
+        <p class="text-base-content/70 text-lg">Registra un nuevo socio en el sistema</p>
+    </div>
+
+    <!-- Premium Form Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl">
+        <div class="card-body p-8">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Grid: Nombre y Apellido -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Nombre <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="nombre" value="{{ form.nombre.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.nombre.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.nombre.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Apellido <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="apellido" value="{{ form.apellido.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.apellido.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.apellido.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Grid: Identificación y Email -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Identificación (DNI) <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="identificacion" value="{{ form.identificacion.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.identificacion.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.identificacion.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                        {% if form.identificacion.help_text %}
+                            <label class="label">
+                                <span class="label-text-alt text-base-content/60">{{ form.identificacion.help_text }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Email <span class="text-error">*</span></span>
+                        </label>
+                        <input type="email" name="email" value="{{ form.email.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+                        {% if form.email.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.email.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                        {% if form.email.help_text %}
+                            <label class="label">
+                                <span class="label-text-alt text-base-content/60">{{ form.email.help_text }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Teléfono y Activo -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-base-content">Teléfono</span>
+                        </label>
+                        <input type="text" name="telefono" value="{{ form.telefono.value|default:'' }}" class="input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Opcional">
+                        {% if form.telefono.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.telefono.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-control w-full">
+                        <label class="label cursor-pointer justify-start gap-4 pt-8">
+                            <input type="checkbox" name="activo" class="checkbox checkbox-primary rounded" {% if form.activo.value != False %}checked{% endif %}>
+                            <span class="label-text font-semibold text-base-content">Socio Activo</span>
+                        </label>
+                        {% if form.activo.errors %}
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ form.activo.errors|first }}</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-4 justify-end mt-8 pt-6 border-t border-base-300">
+                    <a href="{% url 'gestion_socios:listar_socios' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Crear Socio
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

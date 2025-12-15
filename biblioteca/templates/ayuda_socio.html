@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}Guía para Socios - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header -->
+    <div class="mb-10 text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold text-base-content mb-3">Guía para Socios</h1>
+        <p class="text-lg text-base-content/70">Manual completo de uso del sistema para socios</p>
+    </div>
+
+    <div class="space-y-6">
+        <!-- Sección: Registrarse -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo registrarse</h2>
+                <p class="text-sm text-base-content/70 mb-4">Crear una cuenta en el sistema</p>
+                <div class="space-y-4">
+                    <p class="text-base-content/80 leading-relaxed">
+                        Si aún no tenés una cuenta en el sistema:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Dirigite a la página principal del sistema</li>
+                        <li>Click en el botón <strong class="text-primary">"Soy Socio"</strong></li>
+                        <li>En la página de login, buscá el enlace <strong class="text-primary">"Registrarse"</strong> o <strong class="text-primary">"Crear cuenta"</strong></li>
+                        <li>Completá el formulario de registro con tus datos</li>
+                        <li>Una vez registrado, podrás iniciar sesión</li>
+                    </ol>
+                    {% include "components/alert.html" with message="Si tenés problemas para registrarte, contactá al personal de la biblioteca." tag="warning" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Iniciar Sesión -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo iniciar sesión como socio</h2>
+                <p class="text-sm text-base-content/70 mb-4">Acceso a tu cuenta personal</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Dirigite a la página principal del sistema</li>
+                        <li>Click en el botón <strong class="text-primary">"Soy Socio"</strong></li>
+                        <li>Ingresá tu usuario y contraseña</li>
+                        <li>Una vez autenticado, serás redirigido a tu panel personal</li>
+                    </ol>
+                    <div class="mt-4 p-3 bg-base-300/50 rounded-lg">
+                        <p class="text-sm text-base-content/70">
+                            <strong class="text-base-content">Nota:</strong> Si olvidaste tu contraseña, contactá al personal de la biblioteca.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Buscar Libros -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo buscar libros</h2>
+                <p class="text-sm text-base-content/70 mb-4">Explorar el catálogo de la biblioteca</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Desde el menú, seleccioná <strong class="text-primary">"Buscar Libros"</strong></li>
+                        <li>Usá los filtros para buscar por:
+                            <ul class="list-disc list-inside ml-6 mt-2 space-y-1.5">
+                                <li><strong class="text-primary">Título:</strong> Nombre del libro</li>
+                                <li><strong class="text-primary">Autor:</strong> Nombre o apellido del autor</li>
+                                <li><strong class="text-primary">Género:</strong> Tipo de literatura</li>
+                            </ul>
+                        </li>
+                        <li>Click en <strong class="text-primary">"Buscar"</strong> para ver los resultados</li>
+                        <li>La tabla mostrará todos los libros disponibles con su información</li>
+                    </ol>
+                    {% include "components/alert.html" with message="Podés ver la disponibilidad de cada libro directamente en la tabla de resultados." tag="info" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Solicitar Préstamo -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo solicitar un préstamo</h2>
+                <p class="text-sm text-base-content/70 mb-4">Proceso de solicitud de préstamo</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Buscá el libro que deseás solicitar (ver sección "Cómo buscar libros")</li>
+                        <li>Si el libro tiene ejemplares disponibles, verás el botón <strong class="text-primary">"Solicitar"</strong></li>
+                        <li>Click en <strong class="text-primary">"Solicitar"</strong></li>
+                        <li>Revisá la información del préstamo (libro, ejemplar, fecha de devolución esperada)</li>
+                        <li>Confirmá la solicitud clickeando <strong class="text-primary">"Confirmar Préstamo"</strong></li>
+                    </ol>
+                    {% include "components/alert.html" with message="Recibirás una notificación por email confirmando tu préstamo." tag="success" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Reservar Libro -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo reservar un libro si no hay ejemplares disponibles</h2>
+                <p class="text-sm text-base-content/70 mb-4">Sistema de reservas</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Buscá el libro que deseás reservar</li>
+                        <li>Si el libro <strong class="text-primary">NO tiene ejemplares disponibles</strong>, verás el botón <strong class="text-primary">"Reservar"</strong> (en lugar de "Solicitar")</li>
+                        <li>Click en <strong class="text-primary">"Reservar"</strong></li>
+                        <li>Revisá la información del libro y la disponibilidad</li>
+                        <li>Confirmá la reserva clickeando <strong class="text-primary">"Confirmar Reserva"</strong></li>
+                    </ol>
+                    {% include "components/alert.html" with message="Recibirás una notificación por email cuando haya ejemplares disponibles del libro reservado." tag="warning" %}
+                    <div class="mt-4 p-4 bg-base-300/30 rounded-lg border-l-4 border-warning">
+                        <p class="text-base-content/80">
+                            <strong class="text-base-content">Importante:</strong> Solo podés tener una reserva pendiente por libro. Si ya tenés una reserva activa, no podrás crear otra hasta que se complete o cancele la anterior.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Ver Mis Préstamos -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo ver mis préstamos</h2>
+                <p class="text-sm text-base-content/70 mb-4">Historial y estado de tus préstamos</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Desde el menú, seleccioná <strong class="text-primary">"Mis Préstamos"</strong></li>
+                        <li>Verás una tabla con todos tus préstamos, incluyendo:
+                            <ul class="list-disc list-inside ml-6 mt-2 space-y-1.5">
+                                <li>Libro y ejemplar prestado</li>
+                                <li>Fecha de préstamo</li>
+                                <li>Fecha de devolución esperada</li>
+                                <li>Fecha de devolución real (si ya fue devuelto)</li>
+                                <li>Estado del préstamo</li>
+                            </ul>
+                        </li>
+                        <li>Los préstamos están ordenados por fecha (más recientes primero)</li>
+                    </ol>
+                    <div class="mt-4 p-4 bg-base-300/30 rounded-lg">
+                        <p class="font-semibold text-base-content mb-3">
+                            Estados de préstamo:
+                        </p>
+                        <ul class="list-disc list-inside space-y-1.5 text-base-content/80 ml-2">
+                            <li><strong class="text-primary">Pendiente:</strong> Préstamo activo, aún no devuelto</li>
+                            <li><strong class="text-secondary">Devuelto:</strong> Préstamo completado y devuelto</li>
+                            <li><strong class="text-error">Vencido:</strong> Préstamo que superó la fecha de devolución esperada</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Mi Panel Personal -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo ver mi panel personal</h2>
+                <p class="text-sm text-base-content/70 mb-4">Resumen de tu actividad en la biblioteca</p>
+                <div class="space-y-4">
+                    <p class="text-base-content/80 leading-relaxed">
+                        Tu panel personal muestra un resumen de tu actividad en la biblioteca:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li><strong class="text-primary">Préstamos Activos:</strong> Cantidad de libros que tenés actualmente en préstamo</li>
+                        <li><strong class="text-error">Préstamos Vencidos:</strong> Cantidad de préstamos que superaron la fecha de devolución</li>
+                        <li><strong class="text-secondary">Últimos Préstamos Devueltos:</strong> Historial de tus 5 últimos préstamos completados</li>
+                    </ul>
+                    <p class="text-base-content/80 mt-4 leading-relaxed">
+                        Desde el panel también podés acceder rápidamente a:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 text-base-content/80 ml-4">
+                        <li><strong class="text-primary">Buscar Libros:</strong> Para explorar el catálogo</li>
+                        <li><strong class="text-primary">Mis Préstamos:</strong> Para ver el detalle completo de todos tus préstamos</li>
+                    </ul>
+                    <p class="text-base-content/80 mt-4 leading-relaxed">
+                        Para acceder a tu panel, clickeá en <strong class="text-primary">"Mi Panel"</strong> desde el menú principal.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de regreso -->
+        <div class="flex justify-center mt-10">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver al inicio
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Préstamos - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Mis Préstamos</h1>
+        <p class="text-base-content/70 text-lg">Préstamos de {{ socio.nombre }} {{ socio.apellido }}</p>
+    </div>
+    
+    <!-- Premium Table Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mb-6">
+        <div class="card-body p-6">
+            {% if prestamos %}
+                <div class="overflow-x-auto rounded-xl border border-base-300">
+                    <table class="table w-full">
+                        <thead class="bg-base-300">
+                            <tr>
+                                <th class="font-semibold text-base-content">Libro</th>
+                                <th class="font-semibold text-base-content">Ejemplar</th>
+                                <th class="font-semibold text-base-content">Autor</th>
+                                <th class="font-semibold text-base-content">Fecha Préstamo</th>
+                                <th class="font-semibold text-base-content">Devolución Esperada</th>
+                                <th class="font-semibold text-base-content">Devolución Real</th>
+                                <th class="font-semibold text-base-content">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prestamo in prestamos %}
+                            <tr class="hover:bg-base-200 transition-colors duration-150">
+                                <td>
+                                    <div class="font-semibold text-base-content">{{ prestamo.ejemplar.libro.titulo }}</div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-outline badge-sm rounded-lg font-mono inline-flex items-center justify-center leading-normal whitespace-nowrap px-3 py-1 min-w-[2.5rem]">{{ prestamo.ejemplar.codigo }}</span>
+                                </td>
+                                <td class="text-base-content/80">{{ prestamo.ejemplar.libro.autor.nombre }} {{ prestamo.ejemplar.libro.autor.apellido }}</td>
+                                <td class="text-base-content/80">{{ prestamo.fecha_prestamo|date:"d/m/Y" }}</td>
+                                <td class="text-base-content/80">{{ prestamo.fecha_devolucion_esperada|date:"d/m/Y" }}</td>
+                                <td class="text-base-content/80">
+                                    {% if prestamo.fecha_devolucion_real %}
+                                        {{ prestamo.fecha_devolucion_real|date:"d/m/Y" }}
+                                    {% else %}
+                                        <span class="text-base-content/50">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if prestamo.estado == 'PENDIENTE' %}
+                                        <span class="badge badge-warning badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Pendiente</span>
+                                    {% elif prestamo.estado == 'DEVUELTO' %}
+                                        <span class="badge badge-success badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Devuelto</span>
+                                    {% elif prestamo.estado == 'VENCIDO' %}
+                                        <span class="badge badge-error badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Vencido</span>
+                                    {% else %}
+                                        <span class="badge badge-ghost badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ prestamo.estado }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-base-content mb-2">No tienes préstamos registrados</h3>
+                    <p class="text-base-content/70 mb-4">Explora nuestro catálogo para solicitar un préstamo.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="{% url 'socios:buscar_libros' %}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            Buscar Libros
+        </a>
+        <a href="{% url 'socios:mis_reservas' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">Ver Mis Reservas</a>
+        <a href="{% url 'home' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}

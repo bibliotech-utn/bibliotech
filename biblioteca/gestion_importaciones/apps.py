@@ -1,0 +1,8 @@
+from django.apps import AppConfig
+
+
+class GestionImportacionesConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'gestion_importaciones'
+    verbose_name = 'Gestión de Importaciones'
+

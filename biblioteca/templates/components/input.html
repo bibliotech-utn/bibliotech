@@ -1,0 +1,31 @@
+{% comment %}
+Componente de input premium con label flotante
+Uso: {% include 'components/input.html' with field=form.field label="Label" help="Ayuda" error=form.field.errors %}
+Parámetros:
+- field: campo del formulario Django (requerido)
+- label: texto del label (opcional, usa field.label si no se proporciona)
+- help: texto de ayuda (opcional)
+- error: lista de errores (opcional)
+- class: clases adicionales (opcional)
+{% endcomment %}
+
+<div class="form-control w-full">
+    <label class="label">
+        <span class="label-text font-semibold text-base-content">{{ label|default:field.label }}</span>
+        {% if field.field.required %}
+            <span class="text-error">*</span>
+        {% endif %}
+    </label>
+    {{ field|add_class:"input input-bordered w-full rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"|add_class:class }}
+    {% if help %}
+        <label class="label">
+            <span class="label-text-alt text-base-content/60">{{ help }}</span>
+        </label>
+    {% endif %}
+    {% if error %}
+        <label class="label">
+            <span class="label-text-alt text-error">{{ error|first }}</span>
+        </label>
+    {% endif %}
+</div>
+

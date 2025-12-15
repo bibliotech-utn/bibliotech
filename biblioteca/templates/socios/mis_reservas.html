@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Reservas - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Mis Reservas</h1>
+        <p class="text-base-content/70 text-lg">Reservas de {{ socio.nombre }} {{ socio.apellido }}</p>
+    </div>
+
+    <div class="alert bg-amber-100 dark:bg-amber-900/40 border-amber-300 dark:border-amber-700 rounded-xl shadow-lg border-2 mb-6">
+        <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-amber-700 dark:text-amber-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M4.93 19h14.14c1.26 0 2.1-1.31 1.55-2.45L13.55 5.55c-.55-1.14-2.11-1.14-2.66 0L3.38 16.55C2.83 17.69 3.67 19 4.93 19z"></path>
+            </svg>
+            <span class="font-semibold text-amber-900 dark:text-amber-100 leading-normal whitespace-normal flex-1">
+                Recordá que tenés 5 días para retirar el libro una vez confirmada la reserva. Presentá tu DNI o ID de socio al momento del retiro.
+            </span>
+        </div>
+    </div>
+
+    <!-- Premium Table Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mb-6">
+        <div class="card-body p-6">
+            {% if reservas %}
+                <div class="overflow-x-auto rounded-xl border border-base-300">
+                    <table class="table w-full">
+                        <thead class="bg-base-300">
+                            <tr>
+                                <th class="font-semibold text-base-content">Libro</th>
+                                <th class="font-semibold text-base-content">Autor</th>
+                                <th class="font-semibold text-base-content">Fecha Reserva</th>
+                                <th class="font-semibold text-base-content">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reserva in reservas %}
+                            <tr class="hover:bg-base-200 transition-colors duration-150">
+                                <td>
+                                    <div class="font-semibold text-base-content">{{ reserva.libro.titulo }}</div>
+                                </td>
+                                <td class="text-base-content/80">{{ reserva.libro.autor.nombre }} {{ reserva.libro.autor.apellido }}</td>
+                                <td class="text-base-content/80">{{ reserva.fecha_reserva|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    {% if reserva.estado == 'PENDIENTE' %}
+                                        <span class="badge badge-warning badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Pendiente</span>
+                                    {% elif reserva.estado == 'NOTIFICADA' %}
+                                        <span class="badge badge-info badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Confirmada</span>
+                                    {% elif reserva.estado == 'CANCELADA' %}
+                                        <span class="badge badge-error badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">Cancelada</span>
+                                    {% else %}
+                                        <span class="badge badge-ghost badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ reserva.estado }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-base-content mb-2">No tenés reservas registradas</h3>
+                    <p class="text-base-content/70 mb-4">Buscá un libro y generá una reserva si no hay ejemplares disponibles.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="{% url 'socios:buscar_libros' %}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            Buscar Libros
+        </a>
+        <a href="{% url 'socios:mis_prestamos' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">Ver Mis Préstamos</a>
+    </div>
+</div>
+{% endblock %}
+

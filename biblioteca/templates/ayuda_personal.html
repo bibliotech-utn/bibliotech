@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}Guía para Personal de Biblioteca - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header -->
+    <div class="mb-10 text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold text-base-content mb-3">Guía para Personal de Biblioteca</h1>
+        <p class="text-lg text-base-content/70">Manual completo de uso del sistema de gestión</p>
+    </div>
+
+    <div class="space-y-6">
+        <!-- Sección: Iniciar Sesión -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo iniciar sesión como personal</h2>
+                <p class="text-sm text-base-content/70 mb-4">Acceso al sistema para personal de biblioteca</p>
+                <div class="space-y-4">
+                    <p class="text-base-content/80 leading-relaxed">
+                        Para acceder al sistema como personal de biblioteca:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Dirigite a la página principal del sistema</li>
+                        <li>Click en el botón <strong class="text-primary">"Soy Personal de Biblioteca"</strong></li>
+                        <li>Ingresá tu usuario y contraseña</li>
+                        <li>Una vez autenticado, serás redirigido al panel principal</li>
+                    </ol>
+                    <div class="mt-4 p-3 bg-base-300/50 rounded-lg">
+                        <p class="text-sm text-base-content/70">
+                            <strong class="text-base-content">Nota:</strong> Si no tenés una cuenta, contactá al administrador del sistema.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Panel Principal -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo usar el panel principal</h2>
+                <p class="text-sm text-base-content/70 mb-4">Resumen completo del sistema</p>
+                <div class="space-y-4">
+                    <p class="text-base-content/80 leading-relaxed">
+                        El panel principal (Dashboard) muestra un resumen completo del sistema:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li><strong class="text-primary">Total de libros:</strong> Cantidad de libros registrados en el catálogo</li>
+                        <li><strong class="text-primary">Total de ejemplares:</strong> Cantidad total de ejemplares físicos</li>
+                        <li><strong class="text-primary">Total de socios:</strong> Cantidad de socios registrados</li>
+                        <li><strong class="text-primary">Préstamos activos:</strong> Préstamos pendientes de devolución</li>
+                        <li><strong class="text-primary">Préstamos vencidos:</strong> Préstamos que superaron la fecha de devolución</li>
+                    </ul>
+                    <p class="text-base-content/80 mt-4 leading-relaxed">
+                        También podés acceder rápidamente a los módulos principales desde la sección <strong>"Accesos Rápidos"</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Crear Libros, Autores, Socios -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo crear libros, autores y socios</h2>
+                <p class="text-sm text-base-content/70 mb-4">Gestión de catálogo y usuarios</p>
+                <div class="space-y-6">
+                    <div class="p-4 bg-base-300/30 rounded-lg border-l-4 border-primary">
+                        <h3 class="font-semibold text-lg mb-3 text-base-content">Crear Autor</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-base-content/80 ml-2">
+                            <li>Desde el menú, seleccioná <strong class="text-primary">"Autores"</strong> → <strong class="text-primary">"Crear Autor"</strong></li>
+                            <li>Completá el formulario con los datos del autor</li>
+                            <li>Click en <strong class="text-primary">"Crear Autor"</strong></li>
+                        </ol>
+                    </div>
+                    <div class="p-4 bg-base-300/30 rounded-lg border-l-4 border-secondary">
+                        <h3 class="font-semibold text-lg mb-3 text-base-content">Crear Libro</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-base-content/80 ml-2">
+                            <li>Desde el menú, seleccioná <strong class="text-primary">"Libros"</strong> → <strong class="text-primary">"Crear Libro"</strong></li>
+                            <li>Completá el formulario (título, autor, ISBN, género, etc.)</li>
+                            <li>Seleccioná un autor existente o creá uno nuevo primero</li>
+                            <li>Click en <strong class="text-primary">"Crear Libro"</strong></li>
+                        </ol>
+                    </div>
+                    <div class="p-4 bg-base-300/30 rounded-lg border-l-4 border-accent">
+                        <h3 class="font-semibold text-lg mb-3 text-base-content">Crear Socio</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-base-content/80 ml-2">
+                            <li>Desde el menú, seleccioná <strong class="text-primary">"Socios"</strong> → <strong class="text-primary">"Crear Socio"</strong></li>
+                            <li>Completá el formulario con los datos del socio</li>
+                            <li>Click en <strong class="text-primary">"Crear Socio"</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Registrar Préstamos -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo registrar préstamos</h2>
+                <p class="text-sm text-base-content/70 mb-4">Proceso de préstamo de ejemplares</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Desde el menú, seleccioná <strong class="text-primary">"Préstamos"</strong> → <strong class="text-primary">"Registrar Préstamo"</strong></li>
+                        <li>Seleccioná el socio que solicita el préstamo</li>
+                        <li>Seleccioná un ejemplar disponible (solo se muestran ejemplares con estado "Disponible")</li>
+                        <li>Ingresá la fecha de devolución esperada</li>
+                        <li>Click en <strong class="text-primary">"Registrar Préstamo"</strong></li>
+                    </ol>
+                    {% include "components/alert.html" with message="El sistema automáticamente marcará el ejemplar como \"Prestado\" al registrar el préstamo." tag="info" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Registrar Devoluciones -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo registrar devoluciones</h2>
+                <p class="text-sm text-base-content/70 mb-4">Proceso de devolución de ejemplares</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Desde el menú, seleccioná <strong class="text-primary">"Préstamos"</strong> → <strong class="text-primary">"Listar Préstamos"</strong></li>
+                        <li>Buscá el préstamo que deseás devolver</li>
+                        <li>Click en el botón <strong class="text-primary">"Devolver"</strong> (solo visible para préstamos pendientes)</li>
+                        <li>Confirmá la devolución</li>
+                    </ol>
+                    {% include "components/alert.html" with message="Al devolver un préstamo, el ejemplar se marca automáticamente como \"Disponible\" y se registra la fecha de devolución real." tag="success" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Ver Reservas -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo ver reservas de libros</h2>
+                <p class="text-sm text-base-content/70 mb-4">Gestión de reservas pendientes</p>
+                <div class="space-y-4">
+                    <ol class="list-decimal list-inside space-y-2.5 text-base-content/80 ml-2">
+                        <li>Desde el menú, seleccioná <strong class="text-primary">"Préstamos"</strong> → <strong class="text-primary">"Listar Reservas"</strong></li>
+                        <li>Verás todas las reservas pendientes de libros</li>
+                        <li>Podés buscar por socio, libro o estado</li>
+                        <li>Las reservas muestran: socio, libro, fecha de reserva y estado</li>
+                    </ol>
+                    <div class="mt-4 p-4 bg-base-300/30 rounded-lg">
+                        <p class="font-semibold text-base-content mb-3">
+                            Estados de reserva:
+                        </p>
+                        <ul class="list-disc list-inside space-y-1.5 text-base-content/80 ml-2">
+                            <li><strong class="text-primary">Pendiente:</strong> Reserva activa, esperando disponibilidad</li>
+                            <li><strong class="text-secondary">Notificada:</strong> El socio fue notificado de disponibilidad</li>
+                            <li><strong class="text-base-content/60">Cancelada:</strong> Reserva cancelada</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección: Exportar CSV -->
+        <div class="card bg-base-200 shadow-lg hover:shadow-xl transition-all duration-200 ease-out rounded-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-semibold text-base-content mb-2">Cómo exportar libros, socios y préstamos a CSV</h2>
+                <p class="text-sm text-base-content/70 mb-4">Exportación de datos para análisis</p>
+                <div class="space-y-6">
+                    <p class="text-base-content/80 leading-relaxed">
+                        Podés exportar los datos a formato CSV desde cualquier listado:
+                    </p>
+                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-base-300/30 rounded-lg border-l-4 border-primary">
+                            <h3 class="font-semibold text-base mb-2 text-base-content">Exportar Libros</h3>
+                            <ol class="list-decimal list-inside space-y-1.5 text-sm text-base-content/80 ml-2">
+                                <li>Accedé a <strong class="text-primary">"Libros"</strong> → <strong class="text-primary">"Listar Libros"</strong></li>
+                                <li>Click en el botón <strong class="text-primary">"Exportar CSV"</strong></li>
+                                <li>Se descargará <code class="text-xs bg-base-200 px-1.5 py-0.5 rounded">libros.csv</code></li>
+                            </ol>
+                        </div>
+                        <div class="p-4 bg-base-300/30 rounded-lg border-l-4 border-secondary">
+                            <h3 class="font-semibold text-base mb-2 text-base-content">Exportar Socios</h3>
+                            <ol class="list-decimal list-inside space-y-1.5 text-sm text-base-content/80 ml-2">
+                                <li>Accedé a <strong class="text-primary">"Socios"</strong> → <strong class="text-primary">"Listar Socios"</strong></li>
+                                <li>Click en el botón <strong class="text-primary">"Exportar CSV"</strong></li>
+                                <li>Se descargará <code class="text-xs bg-base-200 px-1.5 py-0.5 rounded">socios.csv</code></li>
+                            </ol>
+                        </div>
+                        <div class="p-4 bg-base-300/30 rounded-lg border-l-4 border-accent">
+                            <h3 class="font-semibold text-base mb-2 text-base-content">Exportar Préstamos</h3>
+                            <ol class="list-decimal list-inside space-y-1.5 text-sm text-base-content/80 ml-2">
+                                <li>Accedé a <strong class="text-primary">"Préstamos"</strong> → <strong class="text-primary">"Listar Préstamos"</strong></li>
+                                <li>Click en el botón <strong class="text-primary">"Exportar CSV"</strong></li>
+                                <li>Se descargará <code class="text-xs bg-base-200 px-1.5 py-0.5 rounded">prestamos.csv</code></li>
+                            </ol>
+                        </div>
+                    </div>
+                    {% include "components/alert.html" with message="Los archivos CSV pueden abrirse en Excel, Google Sheets o cualquier programa de hojas de cálculo." tag="info" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de regreso -->
+        <div class="flex justify-center mt-10">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver al inicio
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block title %}Importar Libros - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-semibold text-base-content mb-2">Importar Libros desde Excel</h1>
+        <p class="text-base-content/70 text-lg">Carga múltiples libros desde un archivo Excel (.xlsx)</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mb-6">
+        <div class="card-body p-8">
+            <h2 class="text-2xl font-semibold text-base-content mb-6">Importar desde Excel</h2>
+            <form method="post" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Archivo Excel -->
+                <div class="form-control w-full">
+                    <label class="label">
+                        <span class="label-text font-semibold text-base-content">{{ form.archivo_excel.label }} <span class="text-error">*</span></span>
+                    </label>
+                    <input type="file" 
+                           name="archivo_excel" 
+                           id="id_archivo_excel"
+                           accept=".xlsx,.xls" 
+                           class="file-input file-input-bordered w-full rounded-xl" 
+                           required
+                           onchange="mostrarVistaPreviaArchivo(this)">
+                    <label class="label">
+                        <span class="label-text-alt text-base-content/70">{{ form.archivo_excel.help_text }}</span>
+                    </label>
+                    {% if form.archivo_excel.errors %}
+                        <label class="label">
+                            <span class="label-text-alt text-error">{{ form.archivo_excel.errors|first }}</span>
+                        </label>
+                    {% endif %}
+                    
+                    <!-- Vista previa del archivo -->
+                    <div id="vista-previa-archivo" class="hidden mt-4 p-4 bg-base-100 rounded-xl border border-base-300">
+                        <div class="flex items-center gap-4">
+                            <svg class="w-10 h-10 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <div class="flex-1">
+                                <p class="font-semibold text-base-content" id="nombre-archivo">-</p>
+                                <p class="text-sm text-base-content/70" id="tamano-archivo">-</p>
+                                <p class="text-xs text-base-content/50" id="extension-archivo">-</p>
+                            </div>
+                            <button type="button" onclick="limpiarArchivo()" class="btn btn-sm btn-ghost">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkboxes -->
+                <div class="space-y-4">
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="actualizar_existentes" class="checkbox checkbox-primary" {% if form.actualizar_existentes.value %}checked{% endif %}>
+                            <div>
+                                <span class="label-text font-semibold">{{ form.actualizar_existentes.label }}</span>
+                                <p class="text-sm text-base-content/70">{{ form.actualizar_existentes.help_text }}</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="crear_autores" class="checkbox checkbox-primary" {% if form.crear_autores.value %}checked{% endif %}>
+                            <div>
+                                <span class="label-text font-semibold">{{ form.crear_autores.label }}</span>
+                                <p class="text-sm text-base-content/70">{{ form.crear_autores.help_text }}</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-4">
+                            <input type="checkbox" name="crear_ejemplares" class="checkbox checkbox-primary" {% if form.crear_ejemplares.value %}checked{% endif %}>
+                            <div>
+                                <span class="label-text font-semibold">{{ form.crear_ejemplares.label }}</span>
+                                <p class="text-sm text-base-content/70">{{ form.crear_ejemplares.help_text }}</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="alert alert-info rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h3 class="font-bold">Formato del archivo Excel</h3>
+                        <div class="text-sm mt-1">
+                            <p><strong>Columnas requeridas:</strong> titulo, autor_nombre, autor_apellido</p>
+                            <p><strong>Columnas opcionales:</strong> isbn, editorial, fecha_publicacion, numero_paginas, genero, cantidad_ejemplares</p>
+                            <p class="mt-2">La primera fila debe contener los nombres de las columnas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-4 justify-end mt-8 pt-6 border-t border-base-300">
+                    <a href="{% url 'gestion_libros:listar_libros' %}" class="btn btn-ghost rounded-xl hover:bg-base-300 transition-all duration-200">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        Subir y Procesar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resultados -->
+    {% if resultados %}
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl">
+        <div class="card-body p-8">
+            <h2 class="text-2xl font-semibold text-base-content mb-6">Resultados de la Importación</h2>
+            
+            <!-- Alertas de Resumen -->
+            {% if resultados.importados > 0 %}
+            <div class="alert alert-success rounded-xl mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                    <h3 class="font-bold">¡Importación exitosa!</h3>
+                    <div class="text-sm">{{ resultados.importados }} libro{{ resultados.importados|pluralize:"s" }} importado{{ resultados.importados|pluralize:"s" }} correctamente.</div>
+                    {% if resultados.ejemplares_creados > 0 %}
+                        <div class="text-sm mt-1">{{ resultados.ejemplares_creados }} ejemplar{{ resultados.ejemplares_creados|pluralize:"es" }} creado{{ resultados.ejemplares_creados|pluralize:"s" }}.</div>
+                    {% endif %}
+                    {% if resultados.autores_creados > 0 %}
+                        <div class="text-sm mt-1">{{ resultados.autores_creados }} autor{{ resultados.autores_creados|pluralize:"es" }} creado{{ resultados.autores_creados|pluralize:"s" }} automáticamente.</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if resultados.actualizados > 0 %}
+            <div class="alert alert-info rounded-xl mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                    <h3 class="font-bold">Actualizaciones realizadas</h3>
+                    <div class="text-sm">{{ resultados.actualizados }} libro{{ resultados.actualizados|pluralize:"s" }} actualizado{{ resultados.actualizados|pluralize:"s" }}.</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if resultados.omitidos > 0 %}
+            <div class="alert alert-warning rounded-xl mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                    <h3 class="font-bold">Registros omitidos</h3>
+                    <div class="text-sm">{{ resultados.omitidos }} fila{{ resultados.omitidos|pluralize:"s" }} omitida{{ resultados.omitidos|pluralize:"s" }} (duplicados o errores).</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+                <div class="stat bg-base-100 rounded-lg p-4">
+                    <div class="stat-title">Total Filas</div>
+                    <div class="stat-value text-2xl">{{ resultados.total_filas }}</div>
+                </div>
+                <div class="stat bg-success/10 rounded-lg p-4">
+                    <div class="stat-title text-success">Importados</div>
+                    <div class="stat-value text-2xl text-success">{{ resultados.importados }}</div>
+                </div>
+                <div class="stat bg-info/10 rounded-lg p-4">
+                    <div class="stat-title text-info">Actualizados</div>
+                    <div class="stat-value text-2xl text-info">{{ resultados.actualizados }}</div>
+                </div>
+                <div class="stat bg-warning/10 rounded-lg p-4">
+                    <div class="stat-title text-warning">Omitidos</div>
+                    <div class="stat-value text-2xl text-warning">{{ resultados.omitidos }}</div>
+                </div>
+                <div class="stat bg-primary/10 rounded-lg p-4">
+                    <div class="stat-title text-primary">Ejemplares</div>
+                    <div class="stat-value text-2xl text-primary">{{ resultados.ejemplares_creados }}</div>
+                </div>
+                <div class="stat bg-secondary/10 rounded-lg p-4">
+                    <div class="stat-title text-secondary">Autores</div>
+                    <div class="stat-value text-2xl text-secondary">{{ resultados.autores_creados }}</div>
+                </div>
+            </div>
+
+            {% if resultados.errores %}
+            <div class="alert alert-warning rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                    <h3 class="font-bold">Errores encontrados ({{ resultados.errores|length }})</h3>
+                    <div class="text-sm mt-2 max-h-60 overflow-y-auto">
+                        <ul class="list-disc list-inside space-y-1">
+                            {% for error in resultados.errores|slice:":20" %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            {% if resultados.errores|length > 20 %}
+                                <li class="text-base-content/70">... y {{ resultados.errores|length|add:"-20" }} errores más</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Historial de Importaciones -->
+    {% if historial %}
+    <div class="card bg-base-200 border border-base-300 shadow-lg rounded-xl mt-6">
+        <div class="card-body p-8">
+            <h2 class="text-2xl font-semibold text-base-content mb-6">Historial de Importaciones</h2>
+            
+            <div class="overflow-x-auto rounded-xl">
+                <table class="table w-full">
+                    <thead class="bg-base-300">
+                        <tr>
+                            <th class="font-semibold text-base-content">Fecha</th>
+                            <th class="font-semibold text-base-content">Archivo</th>
+                            <th class="font-semibold text-base-content">Usuario</th>
+                            <th class="font-semibold text-base-content">Total Filas</th>
+                            <th class="font-semibold text-base-content">Importados</th>
+                            <th class="font-semibold text-base-content">Actualizados</th>
+                            <th class="font-semibold text-base-content">Ejemplares</th>
+                            <th class="font-semibold text-base-content">Autores</th>
+                            <th class="font-semibold text-base-content">Errores</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in historial %}
+                        <tr class="hover:bg-base-200 transition-colors duration-150">
+                            <td class="text-base-content/80">{{ registro.fecha|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                <span class="badge badge-outline badge-sm rounded-lg font-mono text-xs inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">
+                                    {{ registro.archivo.name|slice:"-30:" }}
+                                </span>
+                            </td>
+                            <td class="text-base-content/80">{{ registro.usuario.get_full_name|default:registro.usuario.username }}</td>
+                            <td class="text-center">{{ registro.total_filas }}</td>
+                            <td class="text-center text-success font-semibold">{{ registro.registros_importados }}</td>
+                            <td class="text-center text-info font-semibold">{{ registro.registros_actualizados }}</td>
+                            <td class="text-center text-primary font-semibold">
+                                {{ registro.detalles_adicionales.ejemplares_creados|default:0 }}
+                            </td>
+                            <td class="text-center text-secondary font-semibold">
+                                {{ registro.detalles_adicionales.autores_creados|default:0 }}
+                            </td>
+                            <td class="text-center">
+                                {% if registro.errores > 0 %}
+                                    <span class="badge badge-error badge-sm rounded-lg inline-flex items-center justify-center leading-normal whitespace-normal px-2 py-1">{{ registro.errores }}</span>
+                                {% else %}
+                                    <span class="text-base-content/50">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+function mostrarVistaPreviaArchivo(input) {
+    const vistaPrevia = document.getElementById('vista-previa-archivo');
+    const nombreArchivo = document.getElementById('nombre-archivo');
+    const tamanoArchivo = document.getElementById('tamano-archivo');
+    const extensionArchivo = document.getElementById('extension-archivo');
+    
+    if (input.files && input.files[0]) {
+        const archivo = input.files[0];
+        const nombre = archivo.name;
+        const tamano = archivo.size;
+        const extension = nombre.split('.').pop().toUpperCase();
+        
+        // Formatear tamaño
+        let tamanoFormateado;
+        if (tamano < 1024) {
+            tamanoFormateado = tamano + ' B';
+        } else if (tamano < 1024 * 1024) {
+            tamanoFormateado = (tamano / 1024).toFixed(2) + ' KB';
+        } else {
+            tamanoFormateado = (tamano / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+        
+        // Validar extensión
+        if (!['XLSX', 'XLS'].includes(extension)) {
+            alert('Solo se permiten archivos Excel (.xlsx o .xls)');
+            input.value = '';
+            vistaPrevia.classList.add('hidden');
+            return;
+        }
+        
+        nombreArchivo.textContent = nombre;
+        tamanoArchivo.textContent = 'Tamaño: ' + tamanoFormateado;
+        extensionArchivo.textContent = 'Tipo: ' + extension;
+        
+        vistaPrevia.classList.remove('hidden');
+    } else {
+        vistaPrevia.classList.add('hidden');
+    }
+}
+
+function limpiarArchivo() {
+    const input = document.getElementById('id_archivo_excel');
+    const vistaPrevia = document.getElementById('vista-previa-archivo');
+    
+    input.value = '';
+    vistaPrevia.classList.add('hidden');
+}
+</script>
+{% endblock %}
+
