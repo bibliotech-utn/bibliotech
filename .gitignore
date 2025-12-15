@@ -8,6 +8,7 @@
 venv/
 venv_*/
 env/
+/env/
 ENV/
 .venv/
 virtualenv/
@@ -34,8 +35,8 @@ db.sqlite3
 db.sqlite3-journal
 *.log
 logs/
-staticfiles/
-media/
+/staticfiles/
+/media/
 *.pot
 *.pyc
 local_settings.py

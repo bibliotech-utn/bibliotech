@@ -3,6 +3,9 @@
 BiblioTech es un sistema de gestión de biblioteca desarrollado como proyecto académico utilizando Django y Python.  
 Permite administrar libros, ejemplares, socios, personal y préstamos, con una interfaz web pensada para uso en instituciones educativas.
 
+**Repositorio público oficial**: [https://github.com/bibliotech-utn/bibliotech](https://github.com/bibliotech-utn/bibliotech)  
+El repositorio forma parte de la organización del grupo de trabajo.
+
 ---
 
 ## Objetivo del sistema
@@ -81,7 +84,7 @@ Permite administrar libros, ejemplares, socios, personal y préstamos, con una i
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/bibliotech-utn/bibliotech.git
 cd bibliotech
 ```
 
@@ -152,7 +155,9 @@ El proyecto incluye un script auxiliar `bibliotech.py` en la raíz, pensado para
 - Ejecución de migraciones.
 - Ejecución del servidor de desarrollo.
 
-Su uso no es obligatorio. Para la evaluación académica es suficiente seguir los pasos manuales indicados en las secciones de instalación y ejecución.
+Este script actúa como un punto de entrada unificado para preparar y ejecutar el sistema. Internamente realiza los mismos pasos que se ejecutarían manualmente con `manage.py` y los comandos de Python: prepara el entorno virtual, instala las dependencias de `requirements.txt`, aplica las migraciones y, si corresponde, inicia el servidor de desarrollo.
+
+No reemplaza el uso estándar de `manage.py`, sino que funciona como un wrapper/atajo opcional para simplificar el arranque del proyecto desde un único archivo.
 
 ---
 
@@ -162,12 +167,12 @@ Estructura simplificada de los elementos principales:
 
 ```text
 .
-├── bibliotech.py              # Script opcional de automatización (desarrollo)
-├── requirements.txt           # Dependencias de Python
-├── README.md                  # Documentación principal del proyecto
+├── bibliotech.py                          # Script auxiliar/atajo para ejecutar el proyecto
+├── requirements.txt                       # Dependencias de Python
+├── README.md                              # Documentación principal del proyecto
 └── biblioteca/
-    ├── manage.py              # Punto de entrada de Django
-    ├── biblioteca/            # Configuración del proyecto
+    ├── manage.py                          # Punto de entrada clásico de Django
+    ├── biblioteca/                        # Configuración del proyecto
     │   ├── settings.py
     │   ├── urls.py
     │   ├── views.py
@@ -177,9 +182,29 @@ Estructura simplificada de los elementos principales:
     ├── gestion_socios/        # App: socios
     ├── gestion_personal/      # App: personal de biblioteca
     ├── gestion_prestamos/     # App: préstamos y reservas
-    ├── gestion_importaciones/ # App: historial de importaciones
-    ├── templates/             # Templates HTML (base y módulos)
-    └── static/                # Recursos estáticos (CSS adicionales)
+    ├── gestion_importaciones/             # App: historial de importaciones
+    ├── templates/                         # Templates HTML (base y módulos)
+    ├── static/                            # Recursos estáticos (CSS adicionales)
+    └── presentacion/                      # Recursos asociados a la presentación institucional
+
+Dentro de `biblioteca/templates/` se encuentran las vistas de presentación en HTML:
+
+- `landing.html`
+- `presentacion_bibliotech.html`
+
+En `biblioteca/presentacion/` se agrupan los recursos de apoyo para la exposición, incluyendo el video demo en la subcarpeta `video/`.
+
+---
+
+## Video de presentación
+
+El proyecto cuenta con un video de presentación que resume la idea general del sistema, su posible escalabilidad y el enfoque adoptado como solución de gestión bibliotecaria.
+
+Este material se almacena dentro de la estructura del proyecto, bajo:
+
+- `biblioteca/presentacion/video/`
+
+El archivo de video (por ejemplo, `Publicidad de BiblioTech.mp4`) acompaña la landing y la presentación institucional (`landing.html` y `presentacion_bibliotech.html` en `biblioteca/templates/`), y puede utilizarse como soporte en la defensa oral o en revisiones de portfolio.
 ```
 
 La app `theme` se utiliza para centralizar estilos basados en Tailwind CSS. El archivo generado de Tailwind no se mantiene en el repositorio; se puede volver a generar con las herramientas indicadas en `theme/package.json` si se requiere ajustar el diseño.
@@ -207,12 +232,15 @@ La app `theme` se utiliza para centralizar estilos basados en Tailwind CSS. El a
 
 ---
 
-## Roles del equipo
+## Autores
 
-El proyecto fue desarrollado en equipo como trabajo académico para la UTN FRLP.  
-Los créditos se encuentran también en el pie de página de la aplicación (templates).
+Este proyecto fue desarrollado como trabajo académico para la UTN FRLP por:
 
-- **Integrantes**: Stella Cáceres, Juan Zunino y Ramiro Quevedo.
+- **Quevedo Ramiro**
+- **Zunino Juan**
+- **Stella Cáceres**
+
+Los créditos también se encuentran en el pie de página de la aplicación (templates).
 
 ---
 
@@ -223,5 +251,17 @@ Los créditos se encuentran también en el pie de página de la aplicación (tem
 - Los archivos de log se generan en la carpeta `logs/` (ignorados por Git).
 - No se incluye ningún entorno virtual (`venv`) dentro del repositorio.
 - Las dependencias en `requirements.txt` deben instalarse en un entorno virtual limpio para evitar conflictos con otros proyectos.
+
+### Seguridad y manejo de secretos
+
+El proyecto utiliza un `SECRET_KEY` por defecto para facilitar el desarrollo local y la evaluación académica. En el archivo `settings.py`, el `SECRET_KEY` se obtiene desde la variable de entorno `SECRET_KEY` si está definida; en caso contrario, se usa un valor por defecto válido para desarrollo.
+
+**Importante**: En entornos de producción reales, el `SECRET_KEY` debe configurarse mediante variables de entorno y nunca debe versionarse en el repositorio. Para fines académicos y desarrollo local, el enfoque actual es aceptable.
+
+### Feedback y colaboración
+
+El repositorio permite el uso de Issues para reportar problemas o sugerencias. Las Discussions pueden utilizarse para ideas o mejoras futuras. Estas herramientas están disponibles como opción, no como requisito académico.
+
+---
 
 Este README está redactado para acompañar la evaluación académica y servir como referencia técnica básica para cualquier desarrollador que desee revisar o ejecutar el proyecto.
