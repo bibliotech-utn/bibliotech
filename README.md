@@ -158,9 +158,9 @@ Accesos principales:
 
 El proyecto incluye dos vistas institucionales accesibles desde el servidor local:
 
-- **Landing page** (`/landing/`): Página de introducción general del sistema. Funciona como punto de entrada institucional que presenta BiblioTech de forma concisa y orientada a la primera impresión.
+- **Landing page** (`http://127.0.0.1:8000/landing/`): Página de introducción general del sistema. Funciona como punto de entrada institucional que presenta BiblioTech de forma concisa y orientada a la primera impresión.
 
-- **Presentación del sistema** (`/presentacion/`): Vista explicativa que detalla el funcionamiento del sistema, sus características principales y el enfoque adoptado. Complementa la landing con información más técnica y funcional.
+- **Presentación del sistema** (`http://127.0.0.1:8000/presentacion/`): Vista explicativa que detalla el funcionamiento del sistema, sus características principales y el enfoque adoptado. Complementa la landing con información más técnica y funcional.
 
 Ambas vistas están implementadas como templates HTML (`landing.html` y `presentacion_bibliotech.html`) y pueden accederse directamente desde la raíz del proyecto una vez que el servidor de desarrollo está en ejecución.
 
